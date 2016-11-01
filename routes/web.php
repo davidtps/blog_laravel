@@ -17,3 +17,5 @@
 
 Route::get('/','Admin\IndexController@index');
 Route::get('admin/login','Admin\IndexController@login');
+Route::get('admin/verifycode','Admin\IndexController@verifycode');
+Route::get('admin/getcode','Admin\IndexController@getCode');
