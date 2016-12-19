@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\CommController;
 
+use App\Http\Model\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 require_once('App\org\code\Code.class.php');
 
-class IndexController extends CommController
+class LoginController extends CommController
 {
     //测试数据库连接
     public function index()
@@ -28,6 +29,14 @@ class IndexController extends CommController
             $verifycode = $code->get();
 
             if (strtoupper($input['verify_code']) == $verifycode) {
+
+//                $user = DB::select('select * from blog_user where user_id = :id', ['id' => 1]);
+                $user = DB::table('user')->first();
+//                echo $user->user_name ;
+                if ($input['user_name'] != $user->user_name || decrypt($user->user_pwd) != $input['user_pwd']) {
+                    return back()->with('msg', '用户名或密码错误');
+                }
+//                dd($user);
                 echo 'ok';
             } else {
                 return back()->with('msg', '验证码错误');
@@ -46,9 +55,11 @@ class IndexController extends CommController
         $code->make();
     }
 
-    public function getCode()
+
+    public function encyty()
     {
-        $code = new \Code;
-        echo $code->get();
+
+        $str = '123456';
+        echo encrypt($str);
     }
 }

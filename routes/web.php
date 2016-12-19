@@ -15,7 +15,7 @@
 //    return view('welcome');
 //});
 
-Route::get('/','Admin\IndexController@index');
-Route::match(['get','post'],'admin/login','Admin\IndexController@login');
-Route::get('admin/verifycode','Admin\IndexController@verifycode');
-//Route::get('admin/getcode','Admin\IndexController@getCode');
+Route::get('/','Admin\LoginController@index');
+Route::match(['get','post'],'admin/login','Admin\LoginController@login');
+Route::get('admin/verifycode','Admin\LoginController@verifycode');
+Route::get('admin/encyty','Admin\IndexController@encyty');
