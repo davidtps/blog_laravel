@@ -37,13 +37,15 @@ class LoginController extends CommController
                     return back()->with('msg', '用户名或密码错误');
                 }
 //                dd($user);
-                echo 'ok';
+//                echo 'ok';
+                return redirect('admin/index');
             } else {
                 return back()->with('msg', '验证码错误');
             }
 //                dd($input);
         } else {
-
+//            dd($_SERVER);
+//            phpinfo();
             return view('admin.login');
         }
     }
