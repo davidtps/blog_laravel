@@ -38,6 +38,7 @@ class LoginController extends CommController
                 }
 //                dd($user);
 //                echo 'ok';
+                session(['user' => $user]);
                 return redirect('admin/index');
             } else {
                 return back()->with('msg', '验证码错误');
@@ -46,6 +47,7 @@ class LoginController extends CommController
         } else {
 //            dd($_SERVER);
 //            phpinfo();
+//            session(['user' => null]);
             return view('admin.login');
         }
     }
@@ -57,7 +59,14 @@ class LoginController extends CommController
         $code->make();
     }
 
+//退出登录
+    public function quit()
+    {
+        session(['user' => null]);
+        return view('admin.login');
+    }
 
+//test
     public function encyty()
     {
 

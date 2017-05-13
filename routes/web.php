@@ -15,11 +15,19 @@
 //    return view('welcome');
 //});
 
-Route::get('/','Admin\LoginController@index');
-Route::match(['get','post'],'admin/login','Admin\LoginController@login');
 
-Route::get('admin/index', 'Admin\IndexController@index');
-Route::get('admin/info', 'Admin\IndexController@info');
+Route::group(['middleware' => ['web']], function () {
 
-Route::get('admin/verifycode','Admin\LoginController@verifycode');
-Route::get('admin/encyty','Admin\IndexController@encyty');
+    Route::get('/', 'Admin\LoginController@index');
+    Route::get('admin/verifycode', 'Admin\LoginController@verifycode');
+    Route::get('admin/encyty', 'Admin\IndexController@encyty');
+    Route::match(['get', 'post'], 'admin/login', 'Admin\LoginController@login');
+
+
+    Route::get('admin/quit', 'Admin\LoginController@quit');
+});
+Route::group(['middleware' => ['web', 'admin.login'], 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
+//    Route::match(['get', 'post'], 'login', 'LoginController@login');
+    Route::match(['get', 'post'], 'index', 'IndexController@index');
+    Route::match(['get', 'post'], 'info', 'IndexController@info');
+});
