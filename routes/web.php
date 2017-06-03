@@ -23,11 +23,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('admin/encyty', 'Admin\IndexController@encyty');
     Route::match(['get', 'post'], 'admin/login', 'Admin\LoginController@login');
 
-
-    Route::get('admin/quit', 'Admin\LoginController@quit');
 });
 Route::group(['middleware' => ['web', 'admin.login'], 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
 //    Route::match(['get', 'post'], 'login', 'LoginController@login');
-    Route::match(['get', 'post'], 'index', 'IndexController@index');
-    Route::match(['get', 'post'], 'info', 'IndexController@info');
+    Route::get('quit', 'LoginController@quit');
+    Route::match(['get'], 'index', 'IndexController@index');
+    Route::match(['get'], 'info', 'IndexController@info');
+    Route::match(['get', 'post'], 'jumppass', 'IndexController@jumppass');
+    Route::match(['get', 'post'], 'modifypass', 'IndexController@modifypass');
 });
