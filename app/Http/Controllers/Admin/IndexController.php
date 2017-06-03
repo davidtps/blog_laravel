@@ -53,8 +53,10 @@ class IndexController extends CommController
                     $user->user_pwd = encrypt($input['password']);
 //                    $user->update();//不起作用更新不了
                     DB::table('user')->where('user_id', $user->user_id)->update(['user_pwd' => $user->user_pwd]);
-                    return redirect('admin/info');
+//                    return redirect('admin/info');
+                    return back()->withErrors('密码修改成功！');
                 } else {
+
 //                    return back()->with('errors', '原密码错误');//目前版本，这种方式不行了。
                     $errors = '原密码不正确！';
                     return back()->withErrors($errors);
