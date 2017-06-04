@@ -11,7 +11,7 @@ class CategoryController extends CommController
     /**
      * Display a listing of the resource.
      *  get  请求URI:admin/cate
-     * //     * @return \Illuminate\Http\Response  //return 声明可以限制返回的数据类型，注掉后可以使用教程中的方式返回数据
+//     * @return \Illuminate\Http\Response  //return 声明可以限制返回的数据类型，注掉后可以使用教程中的方式返回数据
      */
     public function index()
     {
