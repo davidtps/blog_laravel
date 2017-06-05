@@ -32,5 +32,6 @@ Route::group(['middleware' => ['web', 'admin.login'], 'prefix' => 'admin', 'name
     Route::match(['get', 'post'], 'jumppass', 'IndexController@jumppass');
     Route::match(['get', 'post'], 'modifypass', 'IndexController@modifypass');
 
+    Route::post('cate/changeOrder', 'CategoryController@changeOrder');
     Route::resource('cate', 'CategoryController');
 });

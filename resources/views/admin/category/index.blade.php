@@ -1,12 +1,13 @@
 @extends('layout.frame')
 @section('content')
     <script type="text/javascript" src="{{asset('/resources/views/admin/style/js/jquery.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/app/org/layer/layer.js')}}"></script>
     <script type="text/javascript" src="{{asset('/resources/views/admin/style/js/ch-ui.admin.js')}}"></script>
 
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">商品管理</a> &raquo; 添加商品
+        <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; 分类管理
     </div>
     <!--面包屑导航 结束-->
 
@@ -60,9 +61,10 @@
                     </tr>
                     @foreach($data as $v)
                         <tr>
-                            <td class="tc"><input type="checkbox" name="id[]" value="59"></td>
+                            <td class="tc"><input type="checkbox" name="id[]" value=""></td>
                             <td class="tc">
-                                <input type="text" name="ord[]" value="0">
+                                <input type="text" name="ord[]" onchange="changeOrder(this,{{$v->cat_id}})"
+                                       value="{{$v->cat_order}}"/>
                             </td>
                             <td class="tc">{{$v->cat_id}}</td>
                             <td>
@@ -110,6 +112,21 @@
         </div>
     </form>
     <!--搜索结果页面 列表 结束-->
-
+    <script>
+        function changeOrder(obj, cat_id) {
+            var order_value = $(obj).val();
+            $.post('{{url('admin/cate/changeOrder')}}', {
+                '_token': '{{csrf_token()}}',
+                'cat_id': cat_id,
+                'order_value': order_value
+            }, function ($data) {
+                if ($data['status'] == 0) {
+                    layer.msg($data['message'], {icon: 6});
+                } else {
+                    layer.msg($data['message'], {icon: 5});
+                }
+            })
+        }
+    </script>
 
 @endsection
