@@ -106,23 +106,49 @@ class CategoryController extends CommController
      * Show the form for editing the specified resource.
      * GET URI:admin/cate/{cate}/edit
      * @param  int $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+//        $cate = Category::where('cat_id', $id)->get();//对应的是集合数据需要遍历才行！！！
+        $cate = Category::find($id);//对应的类对象
+        $data = Category::where('cat_pid', 0)->get();//分类数据
+        if ($cate) {
+            return view('admin.category.edit', compact('data', 'cate'));
+        } else {
+            return back()->withErrors('请求数据失败，请稍后再试！');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *  PUT  URI:admin/cate/{cate}
-     * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $input = Input::except('_token','_method');//不排除的话，使用creat我也可以填充到数据库，貌似不影响
+//        dd($input);
+        $rule = [
+            'cat_name' => 'required',
+        ];
+
+        $message = [
+            'cat_name.required' => '分类名称不能为空！',
+        ];
+
+        $validate = Validator::make($input, $rule, $message);
+
+        if ($validate->passes()) {
+            $re = Category::where('cat_id', $id)->update($input);
+            if ($re) {
+                return redirect('admin/cate');
+            } else {
+                return back()->withErrors('修改数据失败！');
+            }
+
+        } else {
+            return back()->withErrors($validate);
+        }
     }
 
     /**
