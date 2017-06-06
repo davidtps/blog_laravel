@@ -69,10 +69,12 @@ class CategoryController extends CommController
 //        dd($input);
         $rule = [
             'cat_name' => 'required',
+            'cat_order' => 'required',
         ];
 
         $message = [
             'cat_name.required' => '分类名称不能为空！',
+            'cat_order.required' => '排序id不能为空！',
         ];
 
         $validate = Validator::make($input, $rule, $message);
@@ -126,7 +128,7 @@ class CategoryController extends CommController
      */
     public function update($id)
     {
-        $input = Input::except('_token','_method');//不排除的话，使用creat我也可以填充到数据库，貌似不影响
+        $input = Input::except('_token', '_method');//不排除的话，使用creat我也可以填充到数据库，貌似不影响,必须排除
 //        dd($input);
         $rule = [
             'cat_name' => 'required',
@@ -159,6 +161,20 @@ class CategoryController extends CommController
      */
     public function destroy($id)
     {
-        //
+        $re = Category::where('cat_id', $id)->delete();
+        Category::where('cat_pid', $id)->update(['cat_pid' => 0]);//将关联的子类都改为顶级分类
+        if ($re) {
+            $data = [
+                'status' => 0,
+                'message' => '删除成功'
+            ];
+        } else {
+            $data = [
+                'status' => -1,
+                'message' => '删除失败'
+            ];
+        }
+        return $data;
+
     }
 }
