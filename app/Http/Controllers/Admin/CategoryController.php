@@ -6,6 +6,7 @@ use App\Http\Controllers\CommController;
 use App\Http\Model\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends CommController
 {
@@ -49,22 +50,45 @@ class CategoryController extends CommController
     /**
      * Show the form for creating a new resource.
      *  GET RUI:admin/cate/create
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        $data = Category::where('cat_pid', 0)->get();
+//        return view('admin.category.add')->with('data',$data); //都可以
+        return view('admin.category.add', compact('data'));
     }
 
     /**
      * Store a newly created resource in storage.
      *  post 操作请求URI:admin/cate
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $input = Input::except('_token');//不排除的话，使用creat我也可以填充到数据库，貌似不影响
+//        dd($input);
+        $rule = [
+            'cat_name' => 'required',
+        ];
+
+        $message = [
+            'cat_name.required' => '分类名称不能为空！',
+        ];
+
+        $validate = Validator::make($input, $rule, $message);
+
+        if ($validate->passes()) {
+            $re = Category::create($input);
+            if ($re) {
+                return redirect('admin/cate');
+            } else {
+                return back()->withErrors('数据填充失败，请重新添加！');
+            }
+
+        } else {
+            return back()->withErrors($validate);
+        }
+
     }
 
     /**
