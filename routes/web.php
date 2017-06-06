@@ -34,4 +34,8 @@ Route::group(['middleware' => ['web', 'admin.login'], 'prefix' => 'admin', 'name
 
     Route::post('cate/changeOrder', 'CategoryController@changeOrder');
     Route::resource('cate', 'CategoryController');
+
+    Route::resource('article', 'ArticleController');
+
+
 });
