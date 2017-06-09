@@ -7,16 +7,15 @@ use App\Http\Model\Article;
 use App\Http\Model\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 
 class ArticleController extends CommController
 {
 
     public function upload()
     {
-
         $file = Input::file('file_upload');
 //        dd($file);
-
         if ($file->isValid()) {
             $realPath = $file->getRealPath();
             $entension = $file->getClientOriginalExtension();//上传文件的后缀
@@ -33,7 +32,7 @@ class ArticleController extends CommController
      */
     public function index()
     {
-        //
+        echo '文章列表';
     }
 
     /**
@@ -43,8 +42,6 @@ class ArticleController extends CommController
      */
     public function create()
     {
-
-
         $data = (new Category())->handldTree();
         return view('admin.article.add', compact('data'));
     }
@@ -53,12 +50,38 @@ class ArticleController extends CommController
      * Store a newly created resource in storage.
      *POST          | admin/article
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $input = Input::all();
-        dd($input);
+        $input = Input::except('file_upload', '_token');
+        $input['art_time'] = time();//date('Y-M-D:h-m-s');
+
+
+
+        $rule = [
+            'art_title' => 'required',
+            'art_content' => 'required',
+        ];
+
+        $message = [
+            'art_title.required' => '文章标题不能为空！',
+            'art_content.required' => '文章内容不能为空！',
+        ];
+
+        $validate = Validator::make($input, $rule, $message);
+
+        if ($validate->passes()) {
+            $re = Article::create($input);
+            if ($re) {
+                return redirect('admin/article');
+            } else {
+                return back()->withErrors('数据填充失败，请重新添加！');
+            }
+
+        } else {
+            return back()->withErrors($validate);
+        }
+
     }
 
     /**

@@ -62,7 +62,7 @@
                 <tr>
                     <th width="120"><i class="require">*</i>选择类别：</th>
                     <td>
-                        <select>
+                        <select name="cat_id">
                             @foreach($data as $v)
                                 <option value="{{$v->cat_id}}">{{$v->cat_name}}</option>
                             @endforeach
@@ -72,18 +72,18 @@
                 <tr>
                     <th><i class="require">*</i>文章标题：</th>
                     <td>
-                        <input type="text" class="lg" name="article_title">
+                        <input type="text" class="lg" name="art_title">
                     </td>
                 </tr>
                 <tr>
                     <th>文章作者：</th>
                     <td>
-                        <input type="text" class="sm" name="alticle_editor">
+                        <input type="text" class="sm" name="art_editor">
                     </td>
                 </tr>
                 <tr>
                     <th>缩略图：</th>
-                    <td><input type="text" id='thumb_url' style="width:300px;" name="thumb_url">
+                    <td><input type="text" id='thumb_url' style="width:300px;" name="art_thumb">
                         <input accept="image/*" id="file_upload" name="file_upload" type="file">
 
                     </td>
@@ -96,19 +96,19 @@
                 <tr>
                     <th>关键字：</th>
                     <td>
-                        <input type="text" class="lg" name="article_keywords">
+                        <input type="text" class="lg" name="art_keywords">
                     </td>
                 </tr>
                 <tr>
                     <th>文章描述：</th>
                     <td>
-                        <textarea name="alticle_desc"></textarea>
+                        <textarea name="art_desc"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <th>文章内容：</th>
                     <td>
-                        <script id="editor" type="text/plain" name="alticle_content"
+                        <script id="editor" type="text/plain" name="art_content"
                                 style="width:800px;height:300px;"></script>
 
                     </td>
