@@ -1,16 +1,29 @@
 @extends('layout.frame')
 @section('content')
+
     <script type="text/javascript" charset="utf-8" src="{{asset('/app/org/ueditor/ueditor.config.js')}}"></script>
     <script type="text/javascript" charset="utf-8" src="{{asset('/app/org/ueditor/ueditor.all.min.js')}}"></script>
     <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
     <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
     <script type="text/javascript" charset="utf-8" src="{{asset('/app/org/ueditor/lang/zh-cn/zh-cn.js')}}"></script>
 
+    {{--upload引入--}}
+    {{--<script src="{{asset('/app/org/uploadify/jquery.uploadify.js')}}" type="text/javascript"></script>--}}
+    {{--<link rel="stylesheet" type="text/css" href="{{asset('/app/org/uploadify/uploadify.css')}}">--}}
     <style>
-        .edui-default{line-height: 28px;}
-        div.edui-combox-body,div.edui-button-body,div.edui-splitbutton-body
-        {overflow: hidden; height:20px;}
-        div.edui-box{overflow: hidden; height:22px;}
+        .edui-default {
+            line-height: 28px;
+        }
+
+        div.edui-combox-body, div.edui-button-body, div.edui-splitbutton-body {
+            overflow: hidden;
+            height: 20px;
+        }
+
+        div.edui-box {
+            overflow: hidden;
+            height: 22px;
+        }
     </style>
 
     <!--面包屑导航 开始-->
@@ -61,7 +74,25 @@
                     <td>
                         <input type="text" class="lg" name="article_title">
                     </td>
+                </tr>
+                <tr>
+                    <th>文章作者：</th>
+                    <td>
+                        <input type="text" class="sm" name="alticle_editor">
+                    </td>
+                </tr>
+                <tr>
+                    <th>缩略图：</th>
+                    <td><input type="text" id='thumb_url' style="width:300px;" name="thumb_url">
+                        <input accept="image/*" id="file_upload" name="file_upload" type="file">
 
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><img src="" id="img_thumb_show" style="max-width: 350px;max-height:100px">
+                    </td>
+                </tr>
                 <tr>
                     <th>关键字：</th>
                     <td>
@@ -77,17 +108,12 @@
                 <tr>
                     <th>文章内容：</th>
                     <td>
-                        <script id="editor" type="text/plain"
+                        <script id="editor" type="text/plain" name="alticle_content"
                                 style="width:800px;height:300px;"></script>
 
                     </td>
                 </tr>
-                <tr>
-                    <th>文章作者：</th>
-                    <td>
-                        <input type="text" class="sm" name="alticle_order">
-                    </td>
-                </tr>
+
                 <tr>
                     <th></th>
                     <td>
@@ -104,5 +130,43 @@
         //实例化编辑器
         //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
         var ue = UE.getEditor('editor');
+
+
+    </script>
+    <script type="text/javascript">
+        $('#file_upload').change(function () {  //选择文件
+            var formData = new FormData($('form')[0]);
+            $.ajax({
+                url: '{{url('admin/article/upload')}}',  //server script to process data
+                type: 'POST',
+//                xhr: function () {  // custom xhr
+//                    myXhr = $.ajaxSettings.xhr();
+//                    if (myXhr.upload) { // check if upload property exists
+//                        myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // for handling the progress of the upload
+//                    }
+//                    return myXhr;
+//                },
+                //Ajax事件
+                beforeSend: function () { //开始上传
+                    layer.msg('上传中,请稍后……');
+                },
+                success: function (data) {
+                    layer.msg('上传成功');
+                    $('#img_thumb_show').attr('src', data);
+                    $('#thumb_url').val(data);
+                },
+                error: function () {
+                    layer.msg('失败 ,请检查网络后重试');
+                },
+                // Form数据
+                data: formData,
+                //Options to tell JQuery not to process data or worry about content-type
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+
+
+        });
     </script>
 @endsection

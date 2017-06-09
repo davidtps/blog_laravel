@@ -3,11 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\CommController;
+use App\Http\Model\Article;
 use App\Http\Model\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class ArticleController extends CommController
 {
+
+    public function upload()
+    {
+
+        $file = Input::file('file_upload');
+//        dd($file);
+
+        if ($file->isValid()) {
+            $realPath = $file->getRealPath();
+            $entension = $file->getClientOriginalExtension();//上传文件的后缀
+            $newName = date('YmdHis') . mt_rand(1000, 9999) . '.' . $entension;
+            $path = $file->move(base_path() . '/uploads', $newName);
+            return '/uploads/' . $newName;
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *GET|HEAD      | admin/article
@@ -28,7 +46,7 @@ class ArticleController extends CommController
 
 
         $data = (new Category())->handldTree();
-        return view('admin.article.add',compact('data'));
+        return view('admin.article.add', compact('data'));
     }
 
     /**
@@ -39,7 +57,8 @@ class ArticleController extends CommController
      */
     public function store(Request $request)
     {
-        //
+        $input = Input::all();
+        dd($input);
     }
 
     /**

@@ -10,4 +10,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class CommController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+
 }

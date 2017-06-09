@@ -1,7 +1,5 @@
 @extends('layout.frame')
 @section('content')
-    <script type="text/javascript" src="{{asset('/resources/views/admin/style/js/jquery.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/app/org/layer/layer.js')}}"></script>
     <script type="text/javascript" src="{{asset('/resources/views/admin/style/js/ch-ui.admin.js')}}"></script>
 
     <!--面包屑导航 开始-->

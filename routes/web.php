@@ -36,6 +36,6 @@ Route::group(['middleware' => ['web', 'admin.login'], 'prefix' => 'admin', 'name
     Route::resource('cate', 'CategoryController');
 
     Route::resource('article', 'ArticleController');
-
+    Route::match(['get', 'post'], 'article/upload', 'ArticleController@upload');
 
 });
