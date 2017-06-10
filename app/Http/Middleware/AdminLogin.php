@@ -15,7 +15,7 @@ class AdminLogin
      */
     public function handle($request, Closure $next)
     {
-//        dd(!session('user'));
+//        dd(session());
         if (!session('user')) {
             return redirect('admin/login');
         } else {//如果已登录的话，请求登陆页让其返回到 用户中心首页

@@ -32,7 +32,8 @@ class ArticleController extends CommController
      */
     public function index()
     {
-        echo '文章列表';
+        $data = Article::orderBy('art_id', 'desc')->paginate(4);
+        return view('admin.article.index', compact('data'));
     }
 
     /**
@@ -55,7 +56,6 @@ class ArticleController extends CommController
     {
         $input = Input::except('file_upload', '_token');
         $input['art_time'] = time();//date('Y-M-D:h-m-s');
-
 
 
         $rule = [
