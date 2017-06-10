@@ -144,10 +144,22 @@ class ArticleController extends CommController
      * Remove the specified resource from storage.
      *DELETE        | admin/article/{article}
      * @param  int $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $re = Article::where('art_id', $id)->delete();
+        if ($re) {
+            $data = [
+                'status' => 0,
+                'message' => '删除成功'
+            ];
+        } else {
+            $data = [
+                'status' => -1,
+                'message' => '删除失败'
+            ];
+        }
+        return $data;
+
     }
 }

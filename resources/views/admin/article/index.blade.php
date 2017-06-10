@@ -51,7 +51,7 @@
                             <td>{{date('Y-M-D  h-m-s',$v->art_time)}}</td>
                             <td>
                                 <a href="{{url('admin/article/'.$v->art_id.'/edit')}}">修改</a>
-                                <a href="javascript:" onclick="deleteCategory({{$v->cat_id}})">删除</a>
+                                <a href="javascript:" onclick="deleteArticle({{$v->art_id}})">删除</a>
                             </td>
                         </tr>
                     @endforeach
@@ -67,11 +67,11 @@
     <!--搜索结果页面 列表 结束-->
     <script>
 
-        function deleteCategory(cat_id) {
-            layer.confirm('确定要删除该分类么？', {
+        function deleteArticle(art_id) {
+            layer.confirm('确定要删除该文章么？', {
                 btn: ['确定', '取消'] //可以无限个按钮
             }, function (index, layero) {
-                $.post('{{url('admin/cate')}}/' + cat_id,
+                $.post('{{url('admin/article')}}/' + art_id,
                     {'_token': '{{csrf_token()}}', '_method': 'delete'},
                     function ($data) {
                         if ($data['status'] == 0) {
