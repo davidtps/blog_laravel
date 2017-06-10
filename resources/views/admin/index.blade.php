@@ -32,6 +32,9 @@
                     <li><a href="{{url('admin/cate')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>分类列表</a></li>
                     <li><a href="{{url('admin/article/create')}}" target="main"><i class="fa fa-fw fa-list-alt"></i>添加文章</a></li>
                     <li><a href="{{url('admin/article')}}" target="main"><i class="fa fa-fw fa-image"></i>文章列表</a></li>
+                    <li><a href="{{url('admin/links/create')}}" target="main"><i class="fa fa-fw fa-list-alt"></i>添加友情链接</a></li>
+                    <li><a href="{{url('admin/links')}}" target="main"><i class="fa fa-fw fa-image"></i>友情链接列表</a></li>
+
                 </ul>
             </li>
             <li>

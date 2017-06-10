@@ -38,4 +38,8 @@ Route::group(['middleware' => ['web', 'admin.login'], 'prefix' => 'admin', 'name
     Route::resource('article', 'ArticleController');
     Route::match(['get', 'post'], 'article/upload', 'ArticleController@upload');
 
+//友情链接
+    Route::post('links/changeOrder', 'LinksController@changeOrder');
+    Route::resource('links', 'LinksController');
+
 });
