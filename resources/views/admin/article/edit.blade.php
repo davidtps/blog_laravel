@@ -55,7 +55,8 @@
     <!--结果集标题与导航组件 结束-->
 
     <div class="result_wrap">
-        <form action="{{url('admin/article')}}" method="post">
+        <form action="{{url('admin/article').'/'.$article->art_id}}" method="post">
+            <input type="hidden" name="_method" value="PUT">
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>
@@ -64,7 +65,11 @@
                     <td>
                         <select name="cat_id">
                             @foreach($data as $v)
-                                <option value="{{$v->cat_id}}">{{$v->cat_name}}</option>
+                                @if($article->cat_id == $v->cat_id)
+                                    <option value="{{$v->cat_id}}" selected>{{$v->cat_name}}</option>
+                                @else
+                                    <option value="{{$v->cat_id}}">{{$v->cat_name}}</option>
+                                @endif
                             @endforeach
                         </select>
                     </td>
@@ -72,44 +77,46 @@
                 <tr>
                     <th><i class="require">*</i>文章标题：</th>
                     <td>
-                        <input type="text" class="lg" name="art_title">
+                        <input type="text" class="lg" name="art_title" value="{{$article->art_title}}">
                     </td>
                 </tr>
                 <tr>
                     <th>文章作者：</th>
                     <td>
-                        <input type="text" class="sm" name="art_editor">
+                        <input type="text" class="sm" name="art_editor" value="{{$article->art_editor}}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>缩略图：</th>
-                    <td><input type="text" id='thumb_url' style="width:300px;" name="art_thumb">
+                    <td><input type=" text" id='thumb_url' style="width:300px;" name="art_thumb"
+                               value="{{$article->art_thumb}}"/>
                         <input accept="image/*" id="file_upload" name="file_upload" type="file">
 
                     </td>
                 </tr>
                 <tr>
                     <th></th>
-                    <td><img src="" id="img_thumb_show" style="max-width: 350px;max-height:100px">
+                    <td><img src="{{$article->art_thumb}}" id="img_thumb_show"
+                             style="max-width: 350px;max-height:100px">
                     </td>
                 </tr>
                 <tr>
                     <th>关键字：</th>
                     <td>
-                        <input type="text" class="lg" name="art_keywords">
+                        <input type="text" class="lg" name="art_keywords" value="{{$article->art_keywords}}">
                     </td>
                 </tr>
                 <tr>
                     <th>文章描述：</th>
                     <td>
-                        <textarea name="art_desc"></textarea>
+                        <textarea name=" art_desc">{{$article->art_desc}}</textarea>
                     </td>
                 </tr>
                 <tr>
                     <th>文章内容：</th>
                     <td>
                         <script id="editor" type="text/plain" name="art_content"
-                                style="width:800px;height:300px;"></script>
+                                style="width:800px;height:300px;">{!! $article->art_content!!}</script>
 
                     </td>
                 </tr>

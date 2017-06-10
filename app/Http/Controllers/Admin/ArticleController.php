@@ -103,7 +103,9 @@ class ArticleController extends CommController
      */
     public function edit($id)
     {
-        //
+        $article = Article::find($id);
+        $data = (new Category())->handldTree();//分类数据
+        return view('admin.article.edit', compact('article', 'data'));
     }
 
     /**
@@ -111,11 +113,31 @@ class ArticleController extends CommController
      *PUT|PATCH     | admin/article/{article}
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update( $id)
     {
-        //
+        $input = Input::except('_token','_method','file_upload');
+        $rule = [
+            'art_title' => 'required',
+        ];
+
+        $message = [
+            'art_title.reitquired' => '文章标题不能为空！',
+        ];
+
+        $validate = Validator::make($input, $rule, $message);
+
+        if ($validate->passes()) {
+            $re = Article::where('art_id', $id)->update($input);
+            if ($re) {
+                return redirect('admin/article');
+            } else {
+                return back()->withErrors('修改数据失败,请稍后重试！');
+            }
+
+        } else {
+            return back()->withErrors($validate);
+        }
     }
 
     /**
