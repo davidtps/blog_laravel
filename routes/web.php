@@ -31,10 +31,10 @@ Route::group(['middleware' => ['web', 'admin.login'], 'prefix' => 'admin', 'name
     Route::match(['get'], 'info', 'IndexController@info');
     Route::match(['get', 'post'], 'jumppass', 'IndexController@jumppass');
     Route::match(['get', 'post'], 'modifypass', 'IndexController@modifypass');
-
+//类别管理
     Route::post('cate/changeOrder', 'CategoryController@changeOrder');
     Route::resource('cate', 'CategoryController');
-
+//文章管理
     Route::resource('article', 'ArticleController');
     Route::match(['get', 'post'], 'article/upload', 'ArticleController@upload');
 
@@ -44,5 +44,7 @@ Route::group(['middleware' => ['web', 'admin.login'], 'prefix' => 'admin', 'name
 //自定义导航
     Route::post('navs/changeOrder', 'NavsController@changeOrder');
     Route::resource('navs', 'NavsController');
-
+//网站配置管理
+    Route::resource('config', 'ConfigController');
+    Route::post('config/changeOrder', 'ConfigController@changeOrder');
 });
