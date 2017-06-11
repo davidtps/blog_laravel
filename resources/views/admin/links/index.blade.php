@@ -25,7 +25,6 @@
             <div class="result_content">
                 <table class="list_tab">
                     <tr>
-                        <th class="tc" width="5%"><input type="checkbox" name=""></th>
                         <th class="tc">排序</th>
                         <th class="tc">ID</th>
                         <th>链接名称</th>
@@ -34,7 +33,6 @@
                     </tr>
                     @foreach($data as $v)
                         <tr>
-                            <td class="tc"><input type="checkbox" name="id[]" value=""></td>
                             <td class="tc">
                                 <input type="text" name="ord[]" onchange="changeOrder(this,{{$v->link_id}})"
                                        value="{{$v->link_order}}"/>

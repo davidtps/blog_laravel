@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="{{asset('/resources/views/admin/style/font/css/font-awesome.min.css')}}">
     <script type="text/javascript" src="{{asset('/resources/views/admin/style/js/jquery.js')}}"></script>
     <script type="text/javascript" src="{{asset('/app/org/layer/layer.js')}}"></script>
+    <style>
+        div p {
+            display: block;
+            background: #FFDE29;
+        }
+    </style>
 </head>
 <body>
 @yield('content')

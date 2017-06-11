@@ -48,7 +48,6 @@
             <div class="result_content">
                 <table class="list_tab">
                     <tr>
-                        <th class="tc" width="5%"><input type="checkbox" name=""></th>
                         <th class="tc">排序</th>
                         <th class="tc">ID</th>
                         <th>分类名称</th>
@@ -58,7 +57,6 @@
                     </tr>
                     @foreach($data as $v)
                         <tr>
-                            <td class="tc"><input type="checkbox" name="id[]" value=""></td>
                             <td class="tc">
                                 <input type="text" name="ord[]" onchange="changeOrder(this,{{$v->cat_id}})"
                                        value="{{$v->cat_order}}"/>
