@@ -41,5 +41,8 @@ Route::group(['middleware' => ['web', 'admin.login'], 'prefix' => 'admin', 'name
 //友情链接
     Route::post('links/changeOrder', 'LinksController@changeOrder');
     Route::resource('links', 'LinksController');
+//自定义导航
+    Route::post('navs/changeOrder', 'NavsController@changeOrder');
+    Route::resource('navs', 'NavsController');
 
 });
