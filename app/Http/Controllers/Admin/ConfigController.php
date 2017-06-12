@@ -81,6 +81,7 @@ class ConfigController extends CommController
         if ($validate->passes()) {
             $re = Config::create($input);
             if ($re) {
+                $this->putFile();
                 return redirect('admin/config');
             } else {
                 return back()->withErrors('配置数据填充失败，请重新添加！');
@@ -142,6 +143,7 @@ class ConfigController extends CommController
         if ($validate->passes()) {
             $re = Config::where('conf_id', $id)->update($input);
             if ($re) {
+                $this->putFile();
                 return redirect('admin/config');
             } else {
                 return back()->withErrors('修改数据失败！');
@@ -161,6 +163,7 @@ class ConfigController extends CommController
     {
         $re = Config::where('conf_id', $id)->delete();
         if ($re) {
+            $this->putFile();
             $data = [
                 'status' => 0,
                 'message' => '删除成功'
@@ -177,6 +180,7 @@ class ConfigController extends CommController
     public function changeOrder()
     {
         $input = Input::all();
+        dd($input);
         $cate = Config::find($input['conf_id']);
         $cate['conf_order'] = $input['order_value'];
 //        $cate->cat_order = $input['order_value'];  //也可以
@@ -210,5 +214,17 @@ class ConfigController extends CommController
             }
         }
         return back()->withErrors($tip);
+    }
+
+    public function putFile()
+    {
+        echo \Illuminate\Support\Facades\Config::get('web.web_title');
+        $data = Config::pluck('conf_title', 'conf_name')->all();
+//        dd($data);
+//        var_dump($data);
+        $path = base_path() . '\config\web.php';
+//        echo $path;
+        $str = "<?PHP return " . var_export($data, true) . ";";
+        file_put_contents($path, $str);//第一个参数路径，第二个才是值
     }
 }

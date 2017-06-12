@@ -16,8 +16,9 @@
 //});
 
 
-Route::group(['middleware' => ['web']], function () {
+use Illuminate\Support\Facades\Route;
 
+Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'Admin\LoginController@index');
     Route::get('admin/verifycode', 'Admin\LoginController@verifycode');
     Route::get('admin/encyty', 'Admin\IndexController@encyty');
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['web', 'admin.login'], 'prefix' => 'admin', 'name
     Route::post('navs/changeOrder', 'NavsController@changeOrder');
     Route::resource('navs', 'NavsController');
 //网站配置管理
+    Route::get('config/putfile', 'ConfigController@putFile');
     Route::resource('config', 'ConfigController');
     Route::post('config/changeOrder', 'ConfigController@changeOrder');
     Route::post('config/modifyContent', 'ConfigController@modifyContent');
