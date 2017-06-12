@@ -18,6 +18,31 @@ class ConfigController extends CommController
     public function index()
     {
         $data = Config::orderBy('conf_order', 'asc')->get();
+
+        foreach ($data as $k => $v) {
+            switch ($v->field_type) {
+                case 'input':
+                    $data[$k]->_html = "<input type=\"text\" class=\"lg\" name=\"conf_content[]\" value=\"$v->conf_content\">";
+                    break;
+                case 'textarea':
+                    $data[$k]->_html = "<textarea  name=\"conf_content[]\">$v->conf_content</textarea>";
+                    break;
+                case 'radio':
+                    $str = '';
+                    $arr = explode(',', $v->field_value);
+                    foreach ($arr as $m => $n) {
+                        $arrin = explode('|', $n);
+                        $check = '';
+                        if ($v->conf_content == $arrin[0]) {
+                            $check = ' checked ';
+                        }
+
+                        $str .= "<input type=\"radio\" class=\"lg\" name=\"conf_content[]\" $check value=\"$arrin[0]\" >$arrin[1]" . '　';
+                    }
+                    $data[$k]->_html = $str;
+                    break;
+            }
+        }
         return view('admin.config.index', compact('data'));
     }
 
@@ -160,14 +185,30 @@ class ConfigController extends CommController
         if ($re) {
             $data = [
                 'status' => 0,
-                'message' => '排序更新成功'
+                'message' => '网站配置排序更新成功'
             ];
         } else {
             $data = [
                 'status' => -1,
-                'message' => '排序更新失败'
+                'message' => '网站配置排序更新失败'
             ];
         }
         return $data;
+    }
+
+    public function modifyContent()
+    {
+        $input = Input::all();
+        $tip = '';
+        foreach ($input['conf_id'] as $k => $v) {
+
+            $re = Config::where('conf_id', $v)->update(['conf_content' => $input['conf_content'][$k]]);
+            if ($re == 0) {
+                $tip = '修改成功';
+            } else {
+                $tip = '修改失败';
+            }
+        }
+        return back()->withErrors($tip);
     }
 }

@@ -47,4 +47,5 @@ Route::group(['middleware' => ['web', 'admin.login'], 'prefix' => 'admin', 'name
 //网站配置管理
     Route::resource('config', 'ConfigController');
     Route::post('config/changeOrder', 'ConfigController@changeOrder');
+    Route::post('config/modifyContent', 'ConfigController@modifyContent');
 });

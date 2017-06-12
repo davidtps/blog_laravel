@@ -33,7 +33,8 @@
                     <li><a href="{{url('admin/cate')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>分类列表</a></li>
                     <li><a href="{{url('admin/article/create')}}" target="main"><i class="fa fa-fw fa-list-alt"></i>添加文章</a>
                     </li>
-                    <li><a href="{{url('admin/article')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>文章列表</a></li>
+                    <li><a href="{{url('admin/article')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>文章列表</a>
+                    </li>
 
                 </ul>
             </li>
@@ -42,6 +43,7 @@
                 <ul class="sub_menu" style="display: block;">
                     <li><a href="{{url('admin/links')}}" target="main"><i class="fa fa-fw fa-cubes"></i>友情链接</a></li>
                     <li><a href="{{url('admin/navs')}}" target="main"><i class="fa fa-fw  fa-navicon"></i>导航管理</a></li>
+                    <li><a href="{{url('admin/config')}}" target="main"><i class="fa fa-fw fa-sliders"></i>网站配置</a></li>
                     <li><a href="#" target="main"><i class="fa fa-fw fa-database"></i>备份还原</a></li>
                 </ul>
             </li>

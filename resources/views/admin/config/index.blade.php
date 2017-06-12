@@ -9,18 +9,26 @@
     </div>
     <!--面包屑导航 结束-->
 
-    <form action="#" method="post">
-        <div class="result_wrap">
-            <!--快捷导航 开始-->
-            <div class="result_content">
-                <div class="short_wrap">
-                    <a href="{{url('admin/config/create')}}"><i class="fa fa-plus"></i>新增网站配置</a>
-                    <a href="{{url('admin/config')}}"><i class="fa fa-recycle"></i>全部网站配置</a>
-                </div>
-            </div>
-            <!--快捷导航 结束-->
-        </div>
 
+    <div class="result_wrap">
+        @if (count($errors) > 0)
+            <div class="mark">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+    @endif
+    <!--快捷导航 开始-->
+        <div class="result_content">
+            <div class="short_wrap">
+                <a href="{{url('admin/config/create')}}"><i class="fa fa-plus"></i>新增网站配置</a>
+                <a href="{{url('admin/config')}}"><i class="fa fa-recycle"></i>全部网站配置</a>
+            </div>
+        </div>
+        <!--快捷导航 结束-->
+    </div>
+    <form action="{{url('admin/config/modifyContent')}}" method="post">
+        {{csrf_field()}}
         <div class="result_wrap">
             <div class="result_content">
                 <table class="list_tab">
@@ -29,19 +37,25 @@
                         <th class="tc">ID</th>
                         <th>配置名称</th>
                         <th>配置标题</th>
+                        <th>内容</th>
                         <th>操作</th>
                     </tr>
                     @foreach($data as $v)
                         <tr>
                             <td class="tc">
-                                <input type="text" name="ord[]" onchange="changeOrder(this,{{$v->conf_id}})"
+                                <input type="text" onchange="changeOrder(this,{{$v->conf_id}})"
                                        value="{{$v->conf_order}}"/>
                             </td>
-                            <td class="tc">{{$v->conf_id}}</td>
+                            <td class="tc">{{$v->conf_id}}
+                                <input type="hidden" name="conf_id[]" value="{{$v->conf_id}}"/>
+                            </td>
                             <td>
                                 <a href="#">{{$v->conf_name}}</a>
                             </td>
                             <td>{{$v->conf_title}}</td>
+                            <td>{!! $v->_html !!}
+
+                            </td>
                             <td>
                                 <a href="{{url('admin/config/'.$v->conf_id.'/edit')}}">修改</a>
                                 <a href="javascript:" onclick="deleteLinks({{$v->conf_id}})">删除</a>
@@ -51,33 +65,10 @@
                 </table>
 
 
-                {{--<div class="page_nav">--}}
-                    {{--<div>--}}
-                        {{--<a class="first" href="/wysls/index.php/Admin/Tag/index/p/1.html">第一页</a>--}}
-                        {{--<a class="prev" href="/wysls/index.php/Admin/Tag/index/p/7.html">上一页</a>--}}
-                        {{--<a class="num" href="/wysls/index.php/Admin/Tag/index/p/6.html">6</a>--}}
-                        {{--<a class="num" href="/wysls/index.php/Admin/Tag/index/p/7.html">7</a>--}}
-                        {{--<span class="current">8</span>--}}
-                        {{--<a class="num" href="/wysls/index.php/Admin/Tag/index/p/9.html">9</a>--}}
-                        {{--<a class="num" href="/wysls/index.php/Admin/Tag/index/p/10.html">10</a>--}}
-                        {{--<a class="next" href="/wysls/index.php/Admin/Tag/index/p/9.html">下一页</a>--}}
-                        {{--<a class="end" href="/wysls/index.php/Admin/Tag/index/p/11.html">最后一页</a>--}}
-                        {{--<span class="rows">11 条记录</span>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-
-                {{--<div class="page_list">--}}
-                    {{--<ul>--}}
-                        {{--<li class="disabled"><a href="#">&laquo;</a></li>--}}
-                        {{--<li class="active"><a href="#">1</a></li>--}}
-                        {{--<li><a href="#">2</a></li>--}}
-                        {{--<li><a href="#">3</a></li>--}}
-                        {{--<li><a href="#">4</a></li>--}}
-                        {{--<li><a href="#">5</a></li>--}}
-                        {{--<li><a href="#">&raquo;</a></li>--}}
-                    {{--</ul>--}}
-                {{--</div>--}}
+            </div>
+            <div class="btn_group">
+                <input type="submit" value="提交">
+                <input type="button" class="back" onclick="history.go(-1)" value="返回">
             </div>
         </div>
     </form>

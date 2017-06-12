@@ -3,7 +3,7 @@
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo;添加配置
+        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首页</a> &raquo;编辑配置
     </div>
     <!--面包屑导航 结束-->
 
@@ -29,7 +29,8 @@
     <!--结果集标题与导航组件 结束-->
 
     <div class="result_wrap">
-        <form action="{{url('admin/config')}}" method="post">
+        <form action="{{url('admin/config').'/'.$data->conf_id}}" method="post">
+            {{method_field('put')}}
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>
@@ -37,41 +38,58 @@
                 <tr>
                     <th><i class="require">*</i>配置标题：</th>
                     <td>
-                        <input type="text" class="lg" name="conf_title"/>
+                        <input type="text" class="lg" name="conf_title" value="{{$data->conf_title}}"/>
                         <span><i class="fa fa-exclamation-circle yellow"></i>配置标题必须填写</span>
                     </td>
                 </tr>
                 <tr>
                     <th><i class="require">*</i>配置名称：</th>
                     <td>
-                        <input type="text" class="lg" name="conf_name">
+                        <input type="text" class="lg" name="conf_name" value="{{$data->conf_name}}">
                         <span><i class="fa fa-exclamation-circle yellow"></i>配置名称必须填写</span>
                     </td>
                 </tr>
                 <tr>
                     <th>类型：</th>
                     <td>
-                        <input type="radio" class="lg" name="field_type" value="input" checked onclick="showTr()">input　
-                        <input type="radio" class="lg" name="field_type" value="textarea" onclick="showTr()">textarea　
-                        <input type="radio" class="lg" name="field_type" value="radio" onclick="showTr()">radio
+                        @if($data->field_type == 'input')
+                            <input type="radio" class="lg" name="field_type" value="input" checked onclick="showTr()">
+                            input　
+                            <input type="radio" class="lg" name="field_type" value="textarea" onclick="showTr()">
+                            textarea　
+                            <input type="radio" class="lg" name="field_type" value="radio" onclick="showTr()">radio
+                        @elseif($data->field_type == 'textarea')
+                            <input type="radio" class="lg" name="field_type" value="input" onclick="showTr()">input　
+                            <input type="radio" class="lg" name="field_type" value="textarea" checked
+                                   onclick="showTr()">textarea　
+                            <input type="radio" class="lg" name="field_type" value="radio" onclick="showTr()">radio
+                        @elseif($data->field_type == 'radio')
+                            <input type="radio" class="lg" name="field_type" value="input" onclick="showTr()">input　
+                            <input type="radio" class="lg" name="field_type" value="textarea" onclick="showTr()">
+                            textarea　
+                            <input type="radio" class="lg" name="field_type" value="radio" checked onclick="showTr()">
+                            radio
+
+                        @endif
+
                     </td>
                 </tr>
                 <tr class="custom">
                     <th>类型值：</th>
                     <td>
-                        <input type="text" class="lg" name="field_value">
+                        <input type="text" class="lg" name="field_value" value="{{$data->field_value}}">
                         <p><i class="fa fa-exclamation-circle yellow"></i>类型为radio时必填，格式：0|关闭,1|打开</p>
                     </td>
                 </tr>
                 <tr>
                     <th><i class="require">*</i>排序：</th>
                     <td>
-                        <input type="text" class="sm" name="conf_order">
+                        <input type="text" class="sm" name="conf_order" value="{{$data->conf_order}}">
                     </td>
                 </tr>
                 <tr>
                     <th><i class="require">*</i>说明：</th>
-                    <td><textarea name="conf_tips"></textarea>
+                    <td><textarea name="conf_tips">{{$data->conf_tips}}</textarea>
                     </td>
                 </tr>
                 <tr>
