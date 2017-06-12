@@ -218,7 +218,7 @@ class ConfigController extends CommController
 
     public function putFile()
     {
-        echo \Illuminate\Support\Facades\Config::get('web.web_title');
+//        echo \Illuminate\Support\Facades\Config::get('web.web_title');  //取值
         $data = Config::pluck('conf_title', 'conf_name')->all();
 //        dd($data);
 //        var_dump($data);
