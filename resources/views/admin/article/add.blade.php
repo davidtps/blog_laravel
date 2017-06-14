@@ -1,4 +1,4 @@
-@extends('layout.frame')
+@extends('layout.adminframe')
 @section('content')
 
     <script type="text/javascript" charset="utf-8" src="{{asset('/app/org/ueditor/ueditor.config.js')}}"></script>

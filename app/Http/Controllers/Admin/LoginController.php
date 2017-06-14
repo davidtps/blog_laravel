@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 
-use App\Http\Controllers\CommController;
 
 use App\Http\Model\User;
 use Illuminate\Support\Facades\DB;

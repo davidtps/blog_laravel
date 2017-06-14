@@ -19,7 +19,9 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/', 'Admin\LoginController@index');
+    Route::get('/', 'Home\IndexController@index');
+    Route::get('/cate', 'Home\IndexController@cate');
+    Route::get('/article', 'Home\IndexController@artList');
     Route::get('admin/verifycode', 'Admin\LoginController@verifycode');
     Route::get('admin/encyty', 'Admin\IndexController@encyty');
     Route::match(['get', 'post'], 'admin/login', 'Admin\LoginController@login');

@@ -1,4 +1,4 @@
-@extends('layout.frame')
+@extends('layout.adminframe')
 @section('content')
     <div class="login_box">
         <h1>Blog</h1>
