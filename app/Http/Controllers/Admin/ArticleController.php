@@ -31,7 +31,7 @@ class ArticleController extends CommController
      */
     public function index()
     {
-        $data = Article::orderBy('art_id', 'desc')->paginate(4);
+        $data = Article::orderBy('art_id', 'desc')->paginate(5);
         return view('admin.article.index', compact('data'));
     }
 

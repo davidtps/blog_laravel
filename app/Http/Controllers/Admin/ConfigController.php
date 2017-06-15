@@ -54,7 +54,6 @@ class ConfigController extends CommController
     {
         return view('admin.config.add');
     }
-
     /**
      * Store a newly created resource in storage.
      *POST          | admin/config
@@ -179,7 +178,6 @@ class ConfigController extends CommController
     public function changeOrder()
     {
         $input = Input::all();
-        dd($input);
         $cate = Config::find($input['conf_id']);
         $cate['conf_order'] = $input['order_value'];
 //        $cate->cat_order = $input['order_value'];  //也可以
@@ -207,6 +205,7 @@ class ConfigController extends CommController
 
             $re = Config::where('conf_id', $v)->update(['conf_content' => $input['conf_content'][$k]]);
             if ($re == 0) {
+                $this->putFile();
                 $tip = '修改成功';
             } else {
                 $tip = '修改失败';
@@ -218,7 +217,7 @@ class ConfigController extends CommController
     public function putFile()
     {
 //        echo \Illuminate\Support\Facades\Config::get('web.web_title');  //取值
-        $data = Config::pluck('conf_title', 'conf_name')->all();
+        $data = Config::pluck('conf_content', 'conf_name')->all();
 //        dd($data);
 //        var_dump($data);
         $path = base_path() . '\config\web.php';

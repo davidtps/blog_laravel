@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Http\Model\Article;
 use App\Http\Model\Navs;
-use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\View;
 
 class CommController extends BaseController
 {
@@ -16,6 +17,15 @@ class CommController extends BaseController
     public function __construct()
     {
         $navs = Navs::all();
-        \Illuminate\Support\Facades\View::share('navs', $navs);//构造方法是必走的，通过参数共享，实现视图共享参数
+
+        //最新文章 前6条
+        $lastest = Article::orderBy('art_time', 'desc')->take(6)->get();
+        //点击排行 前5条
+        $artview = Article::orderBy('art_view', 'desc')->take(5)->get();
+
+
+        View::share('navs', $navs);//构造方法是必走的，通过参数共享，实现视图共享参数
+        View::share('lastest', $lastest);
+        View::share('artview', $artview);
     }
 }

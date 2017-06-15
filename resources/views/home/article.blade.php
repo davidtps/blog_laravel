@@ -1,6 +1,10 @@
 ﻿@extends('layout.homeframe')
+@section('info')
+    <title>{{\Illuminate\Support\Facades\Config::get('web.web_title')}}</title>
+    <meta name="keywords" content="个人博客模板,博客模板"/>
+    <meta name="description" content="寻梦主题的个人博客模板，优雅、稳重、大气,低调。"/>
+@endsection
 @section('content')
-
     <header>
         <div id="logo"><a href="/"></a></div>
         <nav class="topnav" id="topnav">
@@ -61,38 +65,8 @@
                 document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date() / 3600000)
             </script>
             <!-- Baidu Button END -->
-            <div class="blank"></div>
-            <div class="news">
-                <h3>
-                    <p>栏目<span>最新</span></p>
-                </h3>
-                <ul class="rank">
-                    <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
-                    <li><a href="/" title="with love for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
-                    <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
-                    <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
-                    <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
-                    <li><a href="/" title="建站流程篇——教你如何快速学会做网站" target="_blank">建站流程篇——教你如何快速学会做网站</a></li>
-                    <li><a href="/" title="box-shadow 阴影右下脚折边效果" target="_blank">box-shadow 阴影右下脚折边效果</a></li>
-                    <li><a href="/" title="打雷时室内、户外应该需要注意什么" target="_blank">打雷时室内、户外应该需要注意什么</a></li>
-                </ul>
-                <h3 class="ph">
-                    <p>点击<span>排行</span></p>
-                </h3>
-                <ul class="paih">
-                    <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
-                    <li><a href="/" title="withlove for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
-                    <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
-                    <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
-                    <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
-                </ul>
-            </div>
-            <div class="visitors">
-                <h3>
-                    <p>最近访客</p>
-                </h3>
-                <ul>
-                </ul>
+            <div class="news" style="float: left">
+                @parent
             </div>
         </aside>
     </article>
